@@ -17,7 +17,6 @@ use rusqlite::{
 };
 use serde_json::Map;
 use tracing::{
-    debug,
     info,
 };
 
@@ -97,6 +96,7 @@ impl Db {
         #[cfg(unix)]
         {
             use std::os::unix::fs::PermissionsExt;
+            use tracing::debug;
             let metadata = std::fs::metadata(path)?;
             let mut permissions = metadata.permissions();
             if permissions.mode() & 0o777 != 0o600 {
