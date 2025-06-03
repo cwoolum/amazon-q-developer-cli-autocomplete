@@ -2,6 +2,8 @@ pub mod images;
 pub mod issue;
 pub mod shared_writer;
 pub mod ui;
+#[cfg(windows)]
+pub mod windows;
 
 use std::io::Write;
 use std::time::Duration;

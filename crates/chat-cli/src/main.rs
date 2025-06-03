@@ -25,6 +25,14 @@ static GLOBAL: mimalloc::MiMalloc = mimalloc::MiMalloc;
 fn main() -> Result<ExitCode> {
     color_eyre::install()?;
 
+    // Enable ANSI support on Windows
+    #[cfg(windows)]
+    {
+        if let Err(e) = cli::chat::util::windows::enable_ansi_support() {
+            eprintln!("Warning: Failed to enable ANSI support on Windows: {:?}", e);
+        }
+    }
+
     let parsed = match cli::Cli::try_parse() {
         Ok(cli) => cli,
         Err(err) => {
