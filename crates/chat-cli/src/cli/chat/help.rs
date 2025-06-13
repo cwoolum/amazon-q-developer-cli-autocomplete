@@ -231,7 +231,7 @@ pub const HELP_COMMANDS: &[CommandHelp] = &[
         command: "/subscribe",
         description: "Upgrade to a Q Developer Pro subscription for increased query limits",
         subcommands: &[SubCommand {
-            name: "--manage",
+            name: "manage",
             description: "View and manage your existing subscription on AWS",
         }],
         supported_os: &["all"],
