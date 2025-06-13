@@ -3891,7 +3891,17 @@ impl ChatContext {
         )
         .await?;
 
-        if is_remote() || crate::util::open::open_url_async(&url).await.is_err() {
+        // Skip opening the URL in test environments
+        if cfg!(test) || is_remote() {
+            // In tests or remote environments, just display the URL without trying to open it
+            queue!(
+                self.output,
+                style::SetForegroundColor(Color::DarkGrey),
+                style::Print(format!("{} Subscription URL: {}\n\n", "?".magenta(), url.blue())),
+                style::SetForegroundColor(Color::Reset),
+            )?;
+        } else if crate::util::open::open_url_async(&url).await.is_err() {
+            // Only show error message if we actually tried to open the URL
             queue!(
                 self.output,
                 style::SetForegroundColor(Color::DarkGrey),
